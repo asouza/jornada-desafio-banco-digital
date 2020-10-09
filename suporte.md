@@ -11,5 +11,7 @@
   decoração.  
 * Quando vai para o próximo passo usando o código gerado pelo próprio 
   sistema, facilita um possível teste. Sem isso, deveria ter um setId
-* Precisamos testar a idade e, pelo MCDC temos 3 testes. >, = e <. Considerando
-  a ideia de boundary, ainda poderíamos pegar um valor longe.  
+* Precisamos testar a idade e, pelo MCDC temos 3 testes. >, = e <. 
+  * Considerando a ideia de boundary, pegamos o exato valor, o off point e in point pertinho
+  * Como não custa muito, também pegamos on e off point longes
+    
