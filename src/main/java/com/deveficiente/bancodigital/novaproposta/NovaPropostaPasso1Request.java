@@ -27,7 +27,7 @@ public class NovaPropostaPasso1Request {
 	@NotNull
 	@Past
 	@JsonFormat(shape = Shape.STRING, pattern = "dd/MM/yyyy")
-
+	@Age(greaterThan = 18)
 	private LocalDate dataNascimento;
 	@CPF
 	@NotBlank
