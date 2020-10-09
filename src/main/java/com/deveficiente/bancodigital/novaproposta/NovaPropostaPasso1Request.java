@@ -42,12 +42,36 @@ public class NovaPropostaPasso1Request {
 		this.dataNascimento = dataNascimento;
 		this.cpf = cpf;
 	}
+	
+	public String getNome() {
+		return nome;
+	}
+	
+	public String getSobrenome() {
+		return sobrenome;
+	}
+	
+	public LocalDate getDataNascimento() {
+		return dataNascimento;
+	}
+	
+	public String getCpf() {
+		return cpf;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
 
 	@Override
 	public String toString() {
 		return "NovaPropostaPasso1Request [nome=" + nome + ", sobrenome="
 				+ sobrenome + ", email=" + email + ", dataNascimento="
 				+ dataNascimento + ", cpf=" + cpf + "]";
+	}
+
+	public NovaProposta criaNovaProposta() {
+		return new NovaProposta(this);
 	}
 
 }
