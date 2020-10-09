@@ -9,6 +9,7 @@ import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.br.CPF;
 
+import com.deveficiente.bancodigital.compartilhado.UniqueValue;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
@@ -21,13 +22,16 @@ public class NovaPropostaPasso1Request {
 	private String sobrenome;
 	@NotBlank
 	@Email
+	@UniqueValue(domainClass = NovaProposta.class, fieldName = "email")
 	private String email;
 	@NotNull
 	@Past
 	@JsonFormat(shape = Shape.STRING, pattern = "dd/MM/yyyy")
+
 	private LocalDate dataNascimento;
 	@CPF
 	@NotBlank
+	@UniqueValue(domainClass = NovaProposta.class, fieldName = "cpf")
 	private String cpf;
 
 	@JsonCreator
@@ -42,23 +46,23 @@ public class NovaPropostaPasso1Request {
 		this.dataNascimento = dataNascimento;
 		this.cpf = cpf;
 	}
-	
+
 	public String getNome() {
 		return nome;
 	}
-	
+
 	public String getSobrenome() {
 		return sobrenome;
 	}
-	
+
 	public LocalDate getDataNascimento() {
 		return dataNascimento;
 	}
-	
+
 	public String getCpf() {
 		return cpf;
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}

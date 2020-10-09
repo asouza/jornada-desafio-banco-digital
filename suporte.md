@@ -9,3 +9,5 @@
 * Realmente no objeto de request, o spring aplica validação da bean
   validation padrão. As annotations no construtor são apenas
   decoração.  
+* Quando vai para o próximo passo usando o código gerado pelo próprio 
+  sistema, facilita um possível teste. Sem isso, deveria ter um setId  
