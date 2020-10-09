@@ -27,6 +27,7 @@ public class NovaProposta {
 	private String cpf;
 	@NotNull
 	@Past
+	@Age(greaterThan = 18)
 	private LocalDate dataNascimento;
 	@Email
 	@NotBlank
