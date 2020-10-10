@@ -19,3 +19,12 @@
   * Considerando a ideia de boundary, pegamos o exato valor, o off point e in point pertinho
   * Como não custa muito, também pegamos on e off point longes
     
+    
+## detalhe da proposta
+
+* Aqui tem só o possível teste por conta do if do findByCodigo
+* Usando map or elseThrow para tirar o if e não precisar fazer o teste. 
+  * A contrapartida que é aumentou um ponto na complexidade.
+  * E sempre vai aumentar um nos próximos passos. Uma outra possibilidade
+    era criar a classe que vai ficar fazendo isso. 
+      
