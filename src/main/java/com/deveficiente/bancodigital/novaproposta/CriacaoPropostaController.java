@@ -46,7 +46,7 @@ public class CriacaoPropostaController {
 		NovaProposta propostaEmAndamento = possivelProposta.orElseThrow(
 				() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 		
-		propostaEmAndamento.atualizaPasso2(request);
+		propostaEmAndamento.atualizaPasso2(request.criaResidencia());
 
 		return new NovaPropostaResponse(propostaEmAndamento,"/api/nova-proposta/{codigo}/passo-3");
 	}
@@ -62,11 +62,11 @@ public class CriacaoPropostaController {
 		NovaProposta propostaEmAndamento = possivelProposta.orElseThrow(
 				() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 		
-		if(!propostaEmAndamento.passo2Preenchido()) {
+		if(!propostaEmAndamento.getResidencia().isEmpty()) {
 			throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 		
-		propostaEmAndamento.atualizaPasso3(request);
+		propostaEmAndamento.atualizaPasso3(request.getLinkFrenteCpf());
 		
 		return new NovaPropostaResponse(propostaEmAndamento,"/api/nova-proposta/{codigo}/passo-4");
 	}

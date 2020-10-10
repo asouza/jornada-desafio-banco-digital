@@ -36,4 +36,19 @@
   e outras opcionais. Não pode retornar nulo. 
   * Isso é chato porque a ide não colabora, tem que fazer. 
 * Maximizando uso do que está pronto(orElse) para evitar escrever teste, 
-  dado o nosso sistema.         
+  dado o nosso sistema.  
+  
+        
+## passo 3
+
+* Existe a restrição do passo anterior estar preenchido para rodar esse. Só que se deixar
+  todos atributos direto na NovaProposta, tem maior esforço para realizar o teste. Por outro
+  lado, criar uma classe a mais aumenta a complexidade na NovaProposta. A parte boa é que 
+  agora temos um limite para respeitar. Então você pode jogar o jogo sabendo exatamente
+  até onde pode ir.  
+* O fato de ter aumentado em 1 ponto a complexidade da NovaProposta, fez com que 5 
+testes a menos precisassem escritos.. já que teria que escrever um teste cada possível
+false nas informações da residência.          
+* Da para voltar e falar sobre receber uma residencia ou uma request no dominio... 
+  * Faz diferença para a complexidade do controller, então vou nesse caminho.
+* Nem tinha percebido que tinha passado o request para o construtor da novaProposta...  

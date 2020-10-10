@@ -56,4 +56,8 @@ public class NovaPropostaPasso2Request {
 		return estado;
 	}
 
+	public NovaPropostaResidencia criaResidencia() {
+		return new NovaPropostaResidencia(this.rua,this.bairro,this.cep,this.complemento,this.cidade,this.estado);
+	}
+
 }

@@ -1,6 +1,7 @@
 package com.deveficiente.bancodigital.novaproposta;
 
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 public class DetalhePropostaResponse {
 
@@ -10,11 +11,11 @@ public class DetalhePropostaResponse {
 	private String nome;
 	private String sobrenome;
 	private String instanteCriacao;
-	private String bairro;
-	private String cep;
-	private String cidade;
-	private String complemento;
-	private String estado;
+	private String bairro = "";
+	private String cep = "";
+	private String cidade = "";
+	private String complemento = "";
+	private String estado = "";
 	private String linkFrenteCpf;
 
 	public DetalhePropostaResponse(NovaProposta novaProposta) {
@@ -26,11 +27,15 @@ public class DetalhePropostaResponse {
 		sobrenome = novaProposta.getSobrenome();
 		instanteCriacao = novaProposta.getInstanteCriacao()
 				.format(DateTimeFormatter.ofPattern("dd/MM/yyyy kk:mm"));
-		bairro = novaProposta.getBairro().orElse("");
-		cep = novaProposta.getCep().orElse("");
-		cidade = novaProposta.getCidade().orElse("");
-		complemento = novaProposta.getComplemento().orElse("");
-		estado = novaProposta.getEstado().orElse("");
+		Optional<NovaPropostaResidencia> possivelResidencia = novaProposta.getResidencia();
+		if(possivelResidencia.isPresent()) {
+			NovaPropostaResidencia residencia = possivelResidencia.get();
+			bairro = residencia.getBairro();
+			cep = residencia.getCep();
+			cidade = residencia.getCidade();
+			complemento = residencia.getComplemento();
+			estado = residencia.getEstado();			
+		}
 		linkFrenteCpf = novaProposta.getLinkFrenteCpf().orElse("");
 		
 	}

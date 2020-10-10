@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +16,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
+import org.hibernate.validator.constraints.URL;
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.util.Assert;
 
@@ -40,26 +42,26 @@ public class NovaProposta {
 	@NotBlank
 	private String codigo;
 	private LocalDateTime instanteCriacao = LocalDateTime.now();
-	private String cep;
-	private String rua;
-	private String bairro;
-	private String complemento;
-	private String cidade;
-	private String estado;
 	private String linkFrenteCpf;
+	@Embedded
+	@Valid
+	private NovaPropostaResidencia residencia;
 
 	@Deprecated
 	public NovaProposta() {
 
 	}
 
-	public NovaProposta(@Valid @NotNull NovaPropostaPasso1Request passo1) {
-		cpf = passo1.getCpf();
-		dataNascimento = passo1.getDataNascimento();
-		email = passo1.getEmail();
-		nome = passo1.getNome();
-		sobrenome = passo1.getSobrenome();
-		codigo = UUID.randomUUID().toString();
+
+	public NovaProposta(@CPF @NotBlank String cpf,
+			@NotNull @Past LocalDate dataNascimento,
+			@NotBlank @Email String email, @NotBlank String nome,
+			@NotBlank String sobrenome) {
+				this.cpf = cpf;
+				this.dataNascimento = dataNascimento;
+				this.email = email;
+				this.nome = nome;
+				this.sobrenome = sobrenome;
 	}
 
 	public LocalDateTime getInstanteCriacao() {
@@ -89,53 +91,27 @@ public class NovaProposta {
 	public String getCodigo() {
 		return codigo;
 	}
-
-	public Optional<String> getCep() {
-		return Optional.ofNullable(cep);
-	}
-
-	public Optional<String> getRua() {
-		return Optional.ofNullable(rua);
-	}
-
-	public Optional<String> getBairro() {
-		return Optional.ofNullable(bairro);
-	}
-
-	public Optional<String> getComplemento() {
-		return Optional.ofNullable(complemento);
-	}
-
-	public Optional<String> getCidade() {
-		return Optional.ofNullable(cidade);
-	}
-
-	public Optional<String> getEstado() {
-		return Optional.ofNullable(estado);
+	
+	public Optional<NovaPropostaResidencia> getResidencia() {
+		return Optional.ofNullable(residencia);
 	}
 
 	public Optional<String> getLinkFrenteCpf() {
 		return Optional.ofNullable(linkFrenteCpf);
 	}
 
-	public void atualizaPasso2(@Valid NovaPropostaPasso2Request request) {
-		this.cep = request.getCep();
-		this.rua = request.getRua();
-		this.bairro = request.getBairro();
-		this.complemento = request.getComplemento();
-		this.cidade = request.getCidade();
-		this.estado = request.getEstado();
+	public void atualizaPasso2(@Valid NovaPropostaResidencia residencia) {
+		this.residencia = residencia;
 	}
 
-	public void atualizaPasso3(@Valid NovaPropostaPasso3Request request) {
-		Assert.state(this.passo2Preenchido(),
-				"O passo 2 precisa estar preenchido para chegar aqui");
-		this.linkFrenteCpf = request.getLinkFrenteCpf();
-	}
-
-	public boolean passo2Preenchido() {
-		return cep != null && rua != null && bairro != null
-				&& complemento != null && cidade != null && estado != null;
+	/**
+	 * 
+	 * @param linkFrenteCpf
+	 */
+	public void atualizaPasso3(@NotBlank @URL String linkFrenteCpf) {
+		Assert.state(this.getResidencia().isEmpty(),
+				"A residência precisa estar preenchida");
+		this.linkFrenteCpf = linkFrenteCpf;
 	}
 
 }

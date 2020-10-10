@@ -75,7 +75,7 @@ public class NovaPropostaPasso1Request {
 	}
 
 	public NovaProposta criaNovaProposta() {
-		return new NovaProposta(this);
+		return new NovaProposta(this.cpf,this.dataNascimento,this.email,this.nome,this.sobrenome);
 	}
 
 }
