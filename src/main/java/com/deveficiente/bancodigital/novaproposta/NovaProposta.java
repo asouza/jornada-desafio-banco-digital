@@ -16,6 +16,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.br.CPF;
+import org.springframework.util.Assert;
 
 @Entity
 public class NovaProposta {
@@ -45,7 +46,8 @@ public class NovaProposta {
 	private String complemento;
 	private String cidade;
 	private String estado;
-	
+	private String linkFrenteCpf;
+
 	@Deprecated
 	public NovaProposta() {
 
@@ -59,7 +61,7 @@ public class NovaProposta {
 		sobrenome = passo1.getSobrenome();
 		codigo = UUID.randomUUID().toString();
 	}
-	
+
 	public LocalDateTime getInstanteCriacao() {
 		return instanteCriacao;
 	}
@@ -72,30 +74,21 @@ public class NovaProposta {
 		return dataNascimento;
 	}
 
-
-
 	public String getEmail() {
 		return email;
 	}
-
-
 
 	public String getNome() {
 		return nome;
 	}
 
-
-
 	public String getSobrenome() {
 		return sobrenome;
 	}
 
-
-
 	public String getCodigo() {
 		return codigo;
 	}
-	
 
 	public Optional<String> getCep() {
 		return Optional.ofNullable(cep);
@@ -121,6 +114,10 @@ public class NovaProposta {
 		return Optional.ofNullable(estado);
 	}
 
+	public Optional<String> getLinkFrenteCpf() {
+		return Optional.ofNullable(linkFrenteCpf);
+	}
+
 	public void atualizaPasso2(@Valid NovaPropostaPasso2Request request) {
 		this.cep = request.getCep();
 		this.rua = request.getRua();
@@ -128,6 +125,17 @@ public class NovaProposta {
 		this.complemento = request.getComplemento();
 		this.cidade = request.getCidade();
 		this.estado = request.getEstado();
+	}
+
+	public void atualizaPasso3(@Valid NovaPropostaPasso3Request request) {
+		Assert.state(this.passo2Preenchido(),
+				"O passo 2 precisa estar preenchido para chegar aqui");
+		this.linkFrenteCpf = request.getLinkFrenteCpf();
+	}
+
+	public boolean passo2Preenchido() {
+		return cep != null && rua != null && bairro != null
+				&& complemento != null && cidade != null && estado != null;
 	}
 
 }

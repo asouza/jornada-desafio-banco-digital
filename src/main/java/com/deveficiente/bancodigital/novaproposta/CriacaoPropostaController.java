@@ -50,7 +50,27 @@ public class CriacaoPropostaController {
 
 		return new NovaPropostaResponse(propostaEmAndamento,"/api/nova-proposta/{codigo}/passo-3");
 	}
-
+	
+	@PostMapping(value = "/api/nova-proposta/{codigo}/passo-3")
+	@Transactional
+	public NovaPropostaResponse passo3(
+			@PathVariable("codigo") String codigo,
+			@RequestBody @Valid NovaPropostaPasso3Request request) {
+		Optional<NovaProposta> possivelProposta = novaPropostaRepository
+				.findByCodigo(codigo);
+		
+		NovaProposta propostaEmAndamento = possivelProposta.orElseThrow(
+				() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+		
+		if(!propostaEmAndamento.passo2Preenchido()) {
+			throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+		
+		propostaEmAndamento.atualizaPasso3(request);
+		
+		return new NovaPropostaResponse(propostaEmAndamento,"/api/nova-proposta/{codigo}/passo-4");
+	}
+	
 	@GetMapping(value = "/api/nova-proposta/{codigo}")
 	public DetalhePropostaResponse detalhe(
 			@PathVariable("codigo") String codigo) {

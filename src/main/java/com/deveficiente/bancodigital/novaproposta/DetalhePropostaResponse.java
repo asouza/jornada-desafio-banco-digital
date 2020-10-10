@@ -15,6 +15,7 @@ public class DetalhePropostaResponse {
 	private String cidade;
 	private String complemento;
 	private String estado;
+	private String linkFrenteCpf;
 
 	public DetalhePropostaResponse(NovaProposta novaProposta) {
 		cpf = novaProposta.getCpf();
@@ -30,10 +31,13 @@ public class DetalhePropostaResponse {
 		cidade = novaProposta.getCidade().orElse("");
 		complemento = novaProposta.getComplemento().orElse("");
 		estado = novaProposta.getEstado().orElse("");
+		linkFrenteCpf = novaProposta.getLinkFrenteCpf().orElse("");
 		
 	}
 	
-	
+	public String getLinkFrenteCpf() {
+		return linkFrenteCpf;
+	}
 
 	public String getBairro() {
 		return bairro;
