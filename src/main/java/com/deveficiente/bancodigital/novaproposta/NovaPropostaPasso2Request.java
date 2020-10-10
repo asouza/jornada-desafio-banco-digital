@@ -2,9 +2,12 @@ package com.deveficiente.bancodigital.novaproposta;
 
 import javax.validation.constraints.NotBlank;
 
+import com.deveficiente.bancodigital.compartilhado.Cep;
+
 public class NovaPropostaPasso2Request {
 
 	@NotBlank
+	@Cep
 	private String cep;
 	@NotBlank
 	private String rua;
