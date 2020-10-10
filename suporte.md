@@ -27,4 +27,13 @@
   * A contrapartida que é aumentou um ponto na complexidade.
   * E sempre vai aumentar um nos próximos passos. Uma outra possibilidade
     era criar a classe que vai ficar fazendo isso. 
-      
+
+
+## passo 2
+* Método de atualização na nova proposta mostrando o lance do encapsulamento
+  e da api não democrática
+* Lembrar que agora o objeto nasce com algumas informações preenchidas 
+  e outras opcionais. Não pode retornar nulo. 
+  * Isso é chato porque a ide não colabora, tem que fazer. 
+* Maximizando uso do que está pronto(orElse) para evitar escrever teste, 
+  dado o nosso sistema.         

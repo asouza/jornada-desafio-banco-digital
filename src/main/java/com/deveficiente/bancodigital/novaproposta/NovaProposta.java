@@ -2,6 +2,7 @@ package com.deveficiente.bancodigital.novaproposta;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
 
 import javax.persistence.Entity;
@@ -93,6 +94,31 @@ public class NovaProposta {
 
 	public String getCodigo() {
 		return codigo;
+	}
+	
+
+	public Optional<String> getCep() {
+		return Optional.ofNullable(cep);
+	}
+
+	public Optional<String> getRua() {
+		return Optional.ofNullable(rua);
+	}
+
+	public Optional<String> getBairro() {
+		return Optional.ofNullable(bairro);
+	}
+
+	public Optional<String> getComplemento() {
+		return Optional.ofNullable(complemento);
+	}
+
+	public Optional<String> getCidade() {
+		return Optional.ofNullable(cidade);
+	}
+
+	public Optional<String> getEstado() {
+		return Optional.ofNullable(estado);
 	}
 
 	public void atualizaPasso2(@Valid NovaPropostaPasso2Request request) {

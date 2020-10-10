@@ -10,6 +10,11 @@ public class DetalhePropostaResponse {
 	private String nome;
 	private String sobrenome;
 	private String instanteCriacao;
+	private String bairro;
+	private String cep;
+	private String cidade;
+	private String complemento;
+	private String estado;
 
 	public DetalhePropostaResponse(NovaProposta novaProposta) {
 		cpf = novaProposta.getCpf();
@@ -20,7 +25,45 @@ public class DetalhePropostaResponse {
 		sobrenome = novaProposta.getSobrenome();
 		instanteCriacao = novaProposta.getInstanteCriacao()
 				.format(DateTimeFormatter.ofPattern("dd/MM/yyyy kk:mm"));
+		bairro = novaProposta.getBairro().orElse("");
+		cep = novaProposta.getCep().orElse("");
+		cidade = novaProposta.getCidade().orElse("");
+		complemento = novaProposta.getComplemento().orElse("");
+		estado = novaProposta.getEstado().orElse("");
+		
 	}
+	
+	
+
+	public String getBairro() {
+		return bairro;
+	}
+
+
+
+	public String getCep() {
+		return cep;
+	}
+
+
+
+	public String getCidade() {
+		return cidade;
+	}
+
+
+
+	public String getComplemento() {
+		return complemento;
+	}
+
+
+
+	public String getEstado() {
+		return estado;
+	}
+
+
 
 	public String getCpf() {
 		return cpf;
