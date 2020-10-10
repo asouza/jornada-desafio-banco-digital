@@ -20,39 +20,45 @@ public class CriacaoPropostaControllerParte3 {
 	 * 
 	 */
 
-	@Autowired
-	//1
+	// 1
 	private NovaPropostaRepository novaPropostaRepository;
 
+	public CriacaoPropostaControllerParte3(
+			NovaPropostaRepository novaPropostaRepository) {
+		super();
+		this.novaPropostaRepository = novaPropostaRepository;
+	}
+
 	@GetMapping(value = "/api/nova-proposta/{codigo}")
-	//1
+	// 1
 	public DetalhePropostaResponse detalhe(
 			@PathVariable("codigo") String codigo) {
 		Optional<NovaProposta> possivelProposta = novaPropostaRepository
 				.findByCodigo(codigo);
 
-		//1
+		// 1
 		return possivelProposta.map(DetalhePropostaResponse::new).orElseThrow(
 				() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
 	}
-	
+
 	@GetMapping(value = "/api/nova-proposta/{codigo}/versao-final")
 	public DetalhePropostaResponse versaoFinal(
 			@PathVariable("codigo") String codigo) {
 		Optional<NovaProposta> possivelProposta = novaPropostaRepository
 				.findByCodigo(codigo);
 
-		//1
-		NovaProposta proposta = possivelProposta.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-		
-		//1
-		if(!proposta.completa()) {
+		// 1
+		NovaProposta proposta = possivelProposta.orElseThrow(
+				() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+		// 1
+		if (!proposta.completa()) {
 			throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
 		}
-		
+
 		return new DetalhePropostaResponse(proposta);
-				
+
 	}
 
 }
