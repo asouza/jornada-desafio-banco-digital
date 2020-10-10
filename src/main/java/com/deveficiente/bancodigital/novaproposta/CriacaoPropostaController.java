@@ -67,7 +67,7 @@ public class CriacaoPropostaController {
 		
 		propostaEmAndamento.atualizaPasso3(request.getLinkFrenteCpf());
 		
-		return new NovaPropostaResponse(propostaEmAndamento,"/api/nova-proposta/{codigo}/passo-4");
+		return new NovaPropostaResponse(propostaEmAndamento,"/api/nova-proposta/{codigo}/versao-final");
 	}
 
 	@GetMapping(value = "/api/nova-proposta/{codigo}")
@@ -79,6 +79,22 @@ public class CriacaoPropostaController {
 		return possivelProposta.map(DetalhePropostaResponse::new).orElseThrow(
 				() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
+	}
+	
+	@GetMapping(value = "/api/nova-proposta/{codigo}/versao-final")
+	public DetalhePropostaResponse versaoFinal(
+			@PathVariable("codigo") String codigo) {
+		Optional<NovaProposta> possivelProposta = novaPropostaRepository
+				.findByCodigo(codigo);
+
+		NovaProposta proposta = possivelProposta.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+		
+		if(!proposta.completa()) {
+			throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+		
+		return new DetalhePropostaResponse(proposta);
+				
 	}
 
 }

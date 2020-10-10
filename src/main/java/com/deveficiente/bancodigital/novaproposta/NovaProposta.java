@@ -116,4 +116,9 @@ public class NovaProposta {
 		this.linkFrenteCpf = linkFrenteCpf;
 	}
 
+
+	public boolean completa() {
+		return this.residencia!=null && this.linkFrenteCpf!=null;
+	}
+
 }
