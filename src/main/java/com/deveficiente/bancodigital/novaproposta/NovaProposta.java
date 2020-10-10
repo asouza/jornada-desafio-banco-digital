@@ -1,7 +1,7 @@
 package com.deveficiente.bancodigital.novaproposta;
 
 import java.time.LocalDate;
-import java.util.Map;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import javax.persistence.Entity;
@@ -15,7 +15,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.br.CPF;
-import org.springframework.util.Assert;
 
 @Entity
 public class NovaProposta {
@@ -38,6 +37,12 @@ public class NovaProposta {
 	private String sobrenome;
 	@NotBlank
 	private String codigo;
+	private LocalDateTime instanteCriacao = LocalDateTime.now();
+	
+	@Deprecated
+	public NovaProposta() {
+
+	}
 
 	public NovaProposta(@Valid @NotNull NovaPropostaPasso1Request passo1) {
 		cpf = passo1.getCpf();
@@ -47,6 +52,38 @@ public class NovaProposta {
 		sobrenome = passo1.getSobrenome();
 		codigo = UUID.randomUUID().toString();
 	}
+	
+	public LocalDateTime getInstanteCriacao() {
+		return instanteCriacao;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public LocalDate getDataNascimento() {
+		return dataNascimento;
+	}
+
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+
+	public String getNome() {
+		return nome;
+	}
+
+
+
+	public String getSobrenome() {
+		return sobrenome;
+	}
+
+
 
 	public String getCodigo() {
 		return codigo;
