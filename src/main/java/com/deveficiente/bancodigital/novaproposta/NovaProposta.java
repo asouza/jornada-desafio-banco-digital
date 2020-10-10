@@ -38,6 +38,12 @@ public class NovaProposta {
 	@NotBlank
 	private String codigo;
 	private LocalDateTime instanteCriacao = LocalDateTime.now();
+	private String cep;
+	private String rua;
+	private String bairro;
+	private String complemento;
+	private String cidade;
+	private String estado;
 	
 	@Deprecated
 	public NovaProposta() {
@@ -87,6 +93,15 @@ public class NovaProposta {
 
 	public String getCodigo() {
 		return codigo;
+	}
+
+	public void atualizaPasso2(@Valid NovaPropostaPasso2Request request) {
+		this.cep = request.getCep();
+		this.rua = request.getRua();
+		this.bairro = request.getBairro();
+		this.complemento = request.getComplemento();
+		this.cidade = request.getCidade();
+		this.estado = request.getEstado();
 	}
 
 }

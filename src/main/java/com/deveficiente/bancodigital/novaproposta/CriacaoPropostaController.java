@@ -28,12 +28,27 @@ public class CriacaoPropostaController {
 
 	@PostMapping(value = "/api/nova-proposta/passo-1")
 	@Transactional
-	public NovaPropostaPasso1Response passo1(
+	public NovaPropostaResponse passo1(
 			@RequestBody @Valid NovaPropostaPasso1Request request) {
 		NovaProposta novaProposta = request.criaNovaProposta();
 		novaPropostaRepository.save(novaProposta);
 
-		return new NovaPropostaPasso1Response(novaProposta);
+		return new NovaPropostaResponse(novaProposta,"/api/nova-proposta/{codigo}/passo-2");
+	}
+
+	@PostMapping(value = "/api/nova-proposta/{codigo}/passo-2")
+	@Transactional
+	public NovaPropostaResponse passo2(
+			@PathVariable("codigo") String codigo,
+			@RequestBody @Valid NovaPropostaPasso2Request request) {
+		Optional<NovaProposta> possivelProposta = novaPropostaRepository
+				.findByCodigo(codigo);
+		NovaProposta propostaEmAndamento = possivelProposta.orElseThrow(
+				() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+		
+		propostaEmAndamento.atualizaPasso2(request);
+
+		return new NovaPropostaResponse(propostaEmAndamento,"/api/nova-proposta/{codigo}/passo-3");
 	}
 
 	@GetMapping(value = "/api/nova-proposta/{codigo}")
