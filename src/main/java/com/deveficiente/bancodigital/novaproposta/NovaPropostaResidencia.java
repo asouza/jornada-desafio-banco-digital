@@ -12,6 +12,11 @@ public class NovaPropostaResidencia {
 	private @NotBlank String complemento;
 	private @NotBlank String cidade;
 	private @NotBlank String estado;
+	
+	@Deprecated
+	public NovaPropostaResidencia() {
+
+	}
 
 	public NovaPropostaResidencia(@NotBlank String rua, @NotBlank String bairro,
 			@NotBlank String cep, @NotBlank String complemento,

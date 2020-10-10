@@ -33,24 +33,25 @@ public class CriacaoPropostaController {
 		NovaProposta novaProposta = request.criaNovaProposta();
 		novaPropostaRepository.save(novaProposta);
 
-		return new NovaPropostaResponse(novaProposta,"/api/nova-proposta/{codigo}/passo-2");
+		return new NovaPropostaResponse(novaProposta,
+				"/api/nova-proposta/{codigo}/passo-2");
 	}
 
 	@PostMapping(value = "/api/nova-proposta/{codigo}/passo-2")
 	@Transactional
-	public NovaPropostaResponse passo2(
-			@PathVariable("codigo") String codigo,
+	public NovaPropostaResponse passo2(@PathVariable("codigo") String codigo,
 			@RequestBody @Valid NovaPropostaPasso2Request request) {
 		Optional<NovaProposta> possivelProposta = novaPropostaRepository
 				.findByCodigo(codigo);
 		NovaProposta propostaEmAndamento = possivelProposta.orElseThrow(
 				() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-		
+
 		propostaEmAndamento.atualizaPasso2(request.criaResidencia());
 
-		return new NovaPropostaResponse(propostaEmAndamento,"/api/nova-proposta/{codigo}/passo-3");
+		return new NovaPropostaResponse(propostaEmAndamento,
+				"/api/nova-proposta/{codigo}/passo-3");
 	}
-	
+
 	@PostMapping(value = "/api/nova-proposta/{codigo}/passo-3")
 	@Transactional
 	public NovaPropostaResponse passo3(
@@ -62,15 +63,13 @@ public class CriacaoPropostaController {
 		NovaProposta propostaEmAndamento = possivelProposta.orElseThrow(
 				() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 		
-		if(!propostaEmAndamento.getResidencia().isEmpty()) {
-			throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
-		}
+		propostaEmAndamento.getResidencia().orElseThrow(() -> new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY));
 		
 		propostaEmAndamento.atualizaPasso3(request.getLinkFrenteCpf());
 		
 		return new NovaPropostaResponse(propostaEmAndamento,"/api/nova-proposta/{codigo}/passo-4");
 	}
-	
+
 	@GetMapping(value = "/api/nova-proposta/{codigo}")
 	public DetalhePropostaResponse detalhe(
 			@PathVariable("codigo") String codigo) {

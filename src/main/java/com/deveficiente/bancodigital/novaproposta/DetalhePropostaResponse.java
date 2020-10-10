@@ -1,7 +1,6 @@
 package com.deveficiente.bancodigital.novaproposta;
 
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
 
 public class DetalhePropostaResponse {
 
@@ -11,11 +10,7 @@ public class DetalhePropostaResponse {
 	private String nome;
 	private String sobrenome;
 	private String instanteCriacao;
-	private String bairro = "";
-	private String cep = "";
-	private String cidade = "";
-	private String complemento = "";
-	private String estado = "";
+	private DetalhePropostaResidenciaResponse residencia;
 	private String linkFrenteCpf;
 
 	public DetalhePropostaResponse(NovaProposta novaProposta) {
@@ -27,52 +22,20 @@ public class DetalhePropostaResponse {
 		sobrenome = novaProposta.getSobrenome();
 		instanteCriacao = novaProposta.getInstanteCriacao()
 				.format(DateTimeFormatter.ofPattern("dd/MM/yyyy kk:mm"));
-		Optional<NovaPropostaResidencia> possivelResidencia = novaProposta.getResidencia();
-		if(possivelResidencia.isPresent()) {
-			NovaPropostaResidencia residencia = possivelResidencia.get();
-			bairro = residencia.getBairro();
-			cep = residencia.getCep();
-			cidade = residencia.getCidade();
-			complemento = residencia.getComplemento();
-			estado = residencia.getEstado();			
-		}
+		this.residencia = novaProposta.getResidencia()
+				.map(DetalhePropostaResidenciaResponse::new)
+				.orElse(new DetalhePropostaResidenciaResponse());
 		linkFrenteCpf = novaProposta.getLinkFrenteCpf().orElse("");
-		
+
 	}
-	
+
 	public String getLinkFrenteCpf() {
 		return linkFrenteCpf;
 	}
-
-	public String getBairro() {
-		return bairro;
+	
+	public DetalhePropostaResidenciaResponse getResidencia() {
+		return residencia;
 	}
-
-
-
-	public String getCep() {
-		return cep;
-	}
-
-
-
-	public String getCidade() {
-		return cidade;
-	}
-
-
-
-	public String getComplemento() {
-		return complemento;
-	}
-
-
-
-	public String getEstado() {
-		return estado;
-	}
-
-
 
 	public String getCpf() {
 		return cpf;

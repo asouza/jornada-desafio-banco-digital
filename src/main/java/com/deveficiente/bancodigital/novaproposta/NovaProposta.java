@@ -15,6 +15,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.PastOrPresent;
 
 import org.hibernate.validator.constraints.URL;
 import org.hibernate.validator.constraints.br.CPF;
@@ -40,7 +41,8 @@ public class NovaProposta {
 	@NotBlank
 	private String sobrenome;
 	@NotBlank
-	private String codigo;
+	private String codigo = UUID.randomUUID().toString();
+	@PastOrPresent
 	private LocalDateTime instanteCriacao = LocalDateTime.now();
 	private String linkFrenteCpf;
 	@Embedded
@@ -109,7 +111,7 @@ public class NovaProposta {
 	 * @param linkFrenteCpf
 	 */
 	public void atualizaPasso3(@NotBlank @URL String linkFrenteCpf) {
-		Assert.state(this.getResidencia().isEmpty(),
+		Assert.state(this.getResidencia().isPresent(),
 				"A residência precisa estar preenchida");
 		this.linkFrenteCpf = linkFrenteCpf;
 	}
