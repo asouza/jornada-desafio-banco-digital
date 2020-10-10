@@ -28,12 +28,13 @@ public class CriacaoPropostaController {
 
 	@PostMapping(value = "/api/nova-proposta/passo-1")
 	@Transactional
-	public ResponseEntity<?> passo1(@RequestBody @Valid NovaPropostaPasso1Request request,UriComponentsBuilder builder) {
+	public NovaPropostaPasso1Response passo1(@RequestBody @Valid NovaPropostaPasso1Request request) {
 		NovaProposta novaProposta = request.criaNovaProposta();
 		manager.persist(novaProposta);
 		
-		URI proximoPasso = builder.path("/api/nova-proposta/{codigo}/passo-2").buildAndExpand(novaProposta.getCodigo()).toUri();
-		return ResponseEntity.created(proximoPasso).build();
+		return new NovaPropostaPasso1Response(novaProposta);
 	}
+	
+
 
 }
