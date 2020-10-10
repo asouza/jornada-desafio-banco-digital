@@ -10,6 +10,8 @@ public class NovaPropostaPasso1Response extends RepresentationModel<NovaProposta
 	public NovaPropostaPasso1Response(NovaProposta novaProposta) {
 		this.codigo = novaProposta.getCodigo();
 		this.add(Link.of("/api/nova-proposta/{codigo}/passo-2", "next").expand(this.codigo));
+		this.add(Link.of("/api/nova-proposta/{codigo}").expand(this.codigo));
+		
 	}
 	
 	public String getCodigo() {

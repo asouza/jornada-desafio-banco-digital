@@ -11,6 +11,9 @@
   decoração.  
 * Quando vai para o próximo passo usando o código gerado pelo próprio 
   sistema, facilita um possível teste. Sem isso, deveria ter um setId
+* Um pouco de spring hateoas para usar o que podemos na hora de definir o fluxo
+  * Precisamos indicar para o cliente qual o próximo passo
+  * Também é necessário indicar caminho para o estado atual da proposta  
 * Precisamos testar a idade e, pelo MCDC temos 3 testes. >, = e <. 
   * Considerando a ideia de boundary, pegamos o exato valor, o off point e in point pertinho
   * Como não custa muito, também pegamos on e off point longes
